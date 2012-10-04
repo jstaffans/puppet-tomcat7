@@ -3,8 +3,6 @@ class tomcat7 {
   $tomcat7_port = 735
   $tomcat7_password = 'badwolf' 
   
-  notice("Establishing http://$hostname:$tomcat7_port/")
-
   Package { # defaults
     ensure => installed,
   }
