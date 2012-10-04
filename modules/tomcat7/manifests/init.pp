@@ -10,10 +10,6 @@ class tomcat7 {
   package { 'tomcat7':
   }
 
-  package { 'tomcat7-user':
-    require => Package['tomcat7'],
-  }
- 
   package { 'tomcat7-admin':
     require => Package['tomcat7'],
   }
