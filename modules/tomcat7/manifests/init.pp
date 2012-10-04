@@ -3,6 +3,7 @@ class tomcat7 (
     $ensure = running,
     $http_port = 8080,
     $https_port = 8443,
+    $install_admin = true,
 ) {
   package { 'tomcat7':
     ensure => installed,
@@ -12,9 +13,11 @@ class tomcat7 (
     ],
   }
 
-  package { 'tomcat7-admin':
-    ensure => installed,
-    require => Package['tomcat7'],
+  if ($install_admin) {
+    package { 'tomcat7-admin':
+      ensure => installed,
+      require => Package['tomcat7'],
+    }
   }
 
   package { 'libtcnative':
