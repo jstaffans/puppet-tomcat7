@@ -1,4 +1,4 @@
-class tomcat7 {
+class tomcat7 ($enable = true, $ensure = running) {
 
   $http_port = 8080
   $https_port = 8443
@@ -33,7 +33,8 @@ class tomcat7 {
   }
 
   service { 'tomcat7':
-    ensure => running,
+    ensure => $ensure,
+    enable => $enable,
     require => Package['tomcat7'],
   }   
 
