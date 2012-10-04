@@ -1,6 +1,7 @@
 class tomcat7 {
 
-  $tomcat7_port = 735
+  $http_port = 8080
+  $https_port = 8443
   
   Package { # defaults
     ensure => installed,
