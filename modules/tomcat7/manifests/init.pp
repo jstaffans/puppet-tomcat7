@@ -1,4 +1,7 @@
-class tomcat7 ($enable = true, $ensure = running) {
+class tomcat7 (
+    $enable = true,
+    $ensure = running,
+) {
 
   $http_port = 8080
   $https_port = 8443
