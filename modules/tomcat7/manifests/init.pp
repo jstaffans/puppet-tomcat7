@@ -3,11 +3,15 @@ class tomcat7 (
     $ensure = running,
     $http_port = 8080,
     $https_port = 8443,
+    $jre = 'default',
     $install_admin = true,
 ) {
+  $jre_package = "${jre}-jre-headless"
+
   package { 'tomcat7':
     ensure => installed,
     require => [
+      Package[$jre_package],
       Package['authbind'],
       Package['libtcnative'],
     ],
@@ -18,6 +22,9 @@ class tomcat7 (
       ensure => installed,
       require => Package['tomcat7'],
     }
+  }
+
+  package { $jre_package:
   }
 
   package { 'libtcnative':
