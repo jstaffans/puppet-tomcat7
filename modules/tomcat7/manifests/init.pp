@@ -4,11 +4,8 @@ class tomcat7 (
     $http_port = 8080,
     $https_port = 8443,
 ) {
-  Package { # defaults
-    ensure => installed,
-  }
-
   package { 'tomcat7':
+    ensure => installed,
     require => [
       Package['authbind'],
       Package['libtcnative'],
@@ -16,6 +13,7 @@ class tomcat7 (
   }
 
   package { 'tomcat7-admin':
+    ensure => installed,
     require => Package['tomcat7'],
   }
 
