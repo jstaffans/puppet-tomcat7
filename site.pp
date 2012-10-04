@@ -1,6 +1,6 @@
 node default {
 
-   tomcat7::deployment { "SimpleServlet":
+   tomcat7::webapp { "SimpleServlet":
       path => './java_src/SimpleServlet.war'
    }
 
