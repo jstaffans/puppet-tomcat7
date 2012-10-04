@@ -1,7 +1,6 @@
 class tomcat7 {
 
   $tomcat7_port = 735
-  $tomcat7_password = 'badwolf' 
   
   Package { # defaults
     ensure => installed,
@@ -23,13 +22,6 @@ class tomcat7 {
   }
 
   package { 'authbind':
-  }
-
-  file { "/etc/tomcat7/tomcat-users.xml":
-    owner => 'root',
-    require => Package['tomcat7'],
-    notify => Service['tomcat7'],
-    content => template('tomcat7/tomcat-users.xml.erb')
   }
 
   file { '/etc/tomcat7/server.xml':
