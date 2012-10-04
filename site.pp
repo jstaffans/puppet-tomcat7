@@ -1,6 +1,6 @@
 node default {
 
-   tomcat::deployment { "SimpleServlet":
+   tomcat7::deployment { "SimpleServlet":
       path => '/srv/puppet-tomcat-demo/java_src/SimpleServlet.war'
    }
 
