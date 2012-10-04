@@ -8,10 +8,21 @@ class tomcat7 {
   }
 
   package { 'tomcat7':
+    require => [
+      Package['authbind'],
+      Package['libtcnative'],
+    ],
   }
 
   package { 'tomcat7-admin':
     require => Package['tomcat7'],
+  }
+
+  package { 'libtcnative':
+    name => 'libtcnative-1',
+  }
+
+  package { 'authbind':
   }
 
   file { "/etc/tomcat7/tomcat-users.xml":
