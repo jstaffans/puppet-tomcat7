@@ -1,1 +1,3 @@
-puppet --modulepath /srv/puppet-tomcat-demo/modules -v /srv/puppet-tomcat-demo/site.pp
+#!/bin/bash
+cd $(dirname $0)
+puppet --modulepath $PWD/modules -v $PWD/site.pp
