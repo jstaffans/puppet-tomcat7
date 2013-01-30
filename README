@@ -1,10 +1,4 @@
 This manifest is based on a sample demo first presented at TomcatExpert:
 http://www.tomcatexpert.com/blog/2010/04/29/deploying-tomcat-applications-puppet
 
-As an exercise it was adapted to work with the tomcat7 package from Ubuntu
-12.04.  This is still work in progress.
-
-There is a script in the root directory which can be run to try this out:
-sudo ./test.sh --noop
-
-The WAR file we are using is from http://simple.souther.us/.
+It has been adjusted to provide an extremely basic Puppet Tomcat7 module.
