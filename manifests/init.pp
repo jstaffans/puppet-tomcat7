@@ -37,10 +37,10 @@ class tomcat7 (
     $ensure = running,
     $http_port = 8080,
     $https_port = 8443,
-    $jre = 'default',
+    $jre = 'default-jre-headless',
     $install_admin = true,
 ) {
-  $jre_package = "${jre}-jre-headless"
+  $jre_package = "${jre}"
 
   package { 'tomcat7':
     ensure => installed,
