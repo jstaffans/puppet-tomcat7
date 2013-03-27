@@ -38,6 +38,9 @@ class tomcat7 (
     $http_port = 8080,
     $https_port = 8443,
     $install_admin = true,
+    $mysql_user = 'root',
+    $mysql_password = 'root',
+    $mysql_url = 'jdbc:mysql://localhost/databasename'
 ) {
   package { 'tomcat7':
     ensure => installed,
@@ -75,12 +78,42 @@ class tomcat7 (
     require => Package['tomcat7'],
   }   
 
-  file { "tomcat-users.xml":
+  file { 'tomcat-users.xml':
     owner => 'root',
     path => '/etc/tomcat7/tomcat-users.xml',
     require => Package['tomcat7'],
     notify => Service['tomcat7'],
-    content => template('tomcat7/tomcat-users.xml.erb')
+    content => template('tomcat7/tomcat-users.xml.erb'),
   }
- 
+
+  file { 'context.xml':
+    owner => 'root',
+    path => '/etc/tomcat7/context.xml',
+    require => Package['tomcat7'],
+    notify => Service['tomcat7'],
+    content => template('tomcat7/context.xml.erb'),
+  }
+
+  file { 'mysql-connector.jar':
+    owner => 'root',
+    path => '/usr/share/java/mysql-connector-java-5.1.24-bin.jar',
+    source => 'puppet:///modules/tomcat7/mysql-connector-java-5.1.24-bin.jar',
+  }
+
+  exec { 'mysql-connector-symlink-1':
+    cwd => '/usr/share/java',
+    command => 'ln -s mysql-connector-java-5.1.24-bin.jar mysql-connector.jar',
+    path => '/bin:/usr/bin',
+    unless => 'readlink -e mysql-connector.jar',
+    require => File['mysql-connector.jar'],
+  }
+
+  exec { 'mysql-connector-symlink-2':
+    cwd => '/usr/share/tomcat7/lib',
+    command => 'ln -s ../../java/mysql-connector.jar mysql-connector.jar',
+    path => '/bin:/usr/bin',
+    unless => 'readlink -e mysql-connector.jar',
+    require => Exec['mysql-connector-symlink-1'],
+    notify => Service['tomcat7']
+  }
 }
