@@ -37,15 +37,11 @@ class tomcat7 (
     $ensure = running,
     $http_port = 8080,
     $https_port = 8443,
-    $jre = 'default-jre-headless',
     $install_admin = true,
 ) {
-  $jre_package = "${jre}"
-
   package { 'tomcat7':
     ensure => installed,
     require => [
-      Package[$jre_package],
       Package['authbind'],
       Package['libtcnative'],
     ],
@@ -58,9 +54,6 @@ class tomcat7 (
     }
   }
 
-  package { $jre_package:
-  }
-
   package { 'libtcnative':
     name => 'libtcnative-1',
   }
@@ -68,8 +61,9 @@ class tomcat7 (
   package { 'authbind':
   }
 
-  file { '/etc/tomcat7/server.xml':
+  file { 'server.xml':
      owner => 'root',
+     path => '/etc/tomcat7/server.xml',
      require => Package['tomcat7'],
      notify => Service['tomcat7'],
      content => template('tomcat7/server.xml.erb'),
@@ -81,4 +75,12 @@ class tomcat7 (
     require => Package['tomcat7'],
   }   
 
+  file { "tomcat-users.xml":
+    owner => 'root',
+    path => '/etc/tomcat7/tomcat-users.xml',
+    require => Package['tomcat7'],
+    notify => Service['tomcat7'],
+    content => template('tomcat7/tomcat-users.xml.erb')
+  }
+ 
 }
